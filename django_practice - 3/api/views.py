@@ -1,6 +1,6 @@
 from django.http import JsonResponse
-from api.serializers import ProductSerializer, OrderSerializer
-from api.models import Product, Order, OrderItem
+from api.serializers import ProductSerializer
+from api.models import Product
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
@@ -29,10 +29,4 @@ def product_list(request):
 def product_Detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     serializer = ProductSerializer(product)   #we don't need all data thats the reason i remove the many = true
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def order_list(request):
-    orders = Order.objects.all()
-    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
