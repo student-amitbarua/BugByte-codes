@@ -1,0 +1,17 @@
+import django_filters
+from api.models import Product
+from rest_framework import filters
+
+class InStockFilterBackend(filters.BaseFilterBackend):
+        def filter_queryset(self, request, queryset, view):
+                # return queryset.exclude(stock__gt=0) # make a custom filter 
+                return queryset.filter(stock__gt=0) # make a custom filter 
+
+class ProductFilter(django_filters.FilterSet):
+        class Meta:
+                model = Product
+                fields = {
+                        
+                        'name': ['iexact', 'icontains'],
+                        'price': ['exact', 'lt', 'gt', 'range']
+                    }
